@@ -255,8 +255,8 @@ services:
     
   ue1:
     container_name: ue1
-    # build: ueransim-iec61850
-    image: free5gc/ueransim:latest
+    build: ueransim-iec61850
+
     command: ./nr-ue -c ./config/uecfg.yaml
     volumes:
       - ./config/gnbcfg.yaml:/ueransim/config/gnbcfg.yaml
@@ -274,8 +274,8 @@ services:
 
   ue2:
     container_name: ue2
-    # build: ueransim-iec61850
-    image: free5gc/ueransim:latest
+    build: ueransim-iec61850
+
     command: ./nr-ue -c ./config/uecfg.yaml
     volumes:
       - ./config/gnbcfg.yaml:/ueransim/config/gnbcfg.yaml
