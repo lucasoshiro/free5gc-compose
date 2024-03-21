@@ -213,7 +213,7 @@ services:
 
   free5gc-webui:
     container_name: webui
-    image: free5gc/webui:v3.3.0
+    image: free5gc/webui:v3.4.0
     command: ./webui -c ./config/webuicfg.yaml
     expose:
       - "2122"
@@ -249,13 +249,12 @@ services:
       privnet:
         aliases:
           - gnb.free5gc.org
-        ipv4_address: 10.100.200.100
     depends_on:
       - free5gc-amf
       - free5gc-upf
     
-  ue:
-    container_name: ue
+  ue1:
+    container_name: ue1
     # build: ueransim-iec61850
     image: free5gc/ueransim:latest
     command: ./nr-ue -c ./config/uecfg.yaml
@@ -270,6 +269,25 @@ services:
       privnet:
         aliases:
           - ue1.free5gc.org
+    depends_on:
+      - gnb
+
+  ue2:
+    container_name: ue2
+    # build: ueransim-iec61850
+    image: free5gc/ueransim:latest
+    command: ./nr-ue -c ./config/uecfg.yaml
+    volumes:
+      - ./config/gnbcfg.yaml:/ueransim/config/gnbcfg.yaml
+      - ./config/uecfg-2.yaml:/ueransim/config/uecfg.yaml
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - "/dev/net/tun"
+    networks:
+      privnet:
+        aliases:
+          - ue2.free5gc.org
     depends_on:
       - gnb
 
